@@ -35,6 +35,12 @@ public class Symbol {
 
 
 
+	public int getAddr() {
+		return addr;
+	}
+
+
+
 	public boolean compareName(String n){
 		return name.equals(n);
 	}
@@ -67,10 +73,27 @@ public class Symbol {
 		return section;
 	}
 
-	public void setRefSection(int refSection) {
-		int mask = 1 << refSection;
+	public void setRefSection(int _refSection) {
+		int mask = 1 << _refSection;
 		refSection |= mask;
 	}
+
+
+
+	public boolean isReference(int s) {
+		// TODO Auto-generated method stub
+		
+		int mask = 1<<s;
+
+		if((refSection & mask) > 0) return true;
+		
+		return false;
+	}
 	
+	public void print(){
+		
+		System.out.format("%-10s sect:%5d addr : %6X ref : %d\n", name, section, addr, refSection);
+		
+	}
 	
 }

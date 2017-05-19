@@ -5,6 +5,8 @@ public class SectionTable {
 	private static SectionTable table = null;
 	
 	private ArrayList<Section> array = null;
+	private int return_addr;
+	private int start_addr;
 	private int locctr;
 	private int sectionNum;
 	
@@ -18,16 +20,31 @@ public class SectionTable {
 	
 	private SectionTable(){
 		array = new ArrayList<Section>();
+		return_addr = 0;
+		start_addr = 0;
 		locctr = 0;
-		sectionNum = 0;
+		sectionNum = -1;
 	}	
+	
+	public void addSection(Section s){
+		
+		try {
+			
+			if(s==null)
+				throw new CustomException(CustomException.NULL_POINTER_EXCEPTION);
+
+			sectionNum++;
+			array.add(s);
+			
+		} catch (CustomException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+	}
 	
 	public int getSectionNum(){
 		return sectionNum;
-	}
-	
-	public void nextSection(){
-		sectionNum++;
 	}
 	
 	public int getLocctr(){
@@ -39,7 +56,21 @@ public class SectionTable {
 	}
 	
 	public void setLocctr(int l){
+		start_addr = l;
 		locctr = l;
+	}
+	
+	public int getReturn_addr() {
+		return return_addr;
+	}
+
+	public void setReturn_addr(int return_addr) {
+		this.return_addr = return_addr;
+	}
+
+	public void setLength(){
+		Section s = array.get(sectionNum);
+		s.setLength(locctr - start_addr);
 	}
 	
 }

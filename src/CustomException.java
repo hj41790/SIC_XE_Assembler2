@@ -4,7 +4,7 @@ public class CustomException extends Exception {
 	int errCode;
 	
 	CustomException(int a){
-		super(errMsg[Math.abs(a)]);
+		super(errMsg[a]);
 		errCode = a;
 	}
 	
@@ -13,32 +13,32 @@ public class CustomException extends Exception {
 	}
 	
 	
-	static int DIRECTIVE_BYTE_CHARACTOR = -1;
-	static int DIRECTIVE_BYTE_QUOTATION = -2;
-	static int OPERATOR_UNDEFINED		= -3;
-	static int OPERAND_NOT_INTEGER		= -4;
-	static int SYMBOL_NAME_DUPLICATION	= -5;
-	static int NO_OPERAND				= -6;
-	static int OPERAND_TOO_MUCH			= -7;
-	static int SYMBOL_NAME_NULL			= -8;
-	static int TOKEN_PARSING_ERR		= -9;
-	static int NULL_POINTER_EXCEPTION	= -11;
-	static int PARAMETER_WORNG_FORMAT	= -12;
+	static final int NULL_POINTER_EXCEPTION		= 1;
+	static final int WRONG_FORMAT				= 2;
+	static final int OPERATOR_UNDEFINED			= 3;
+	static final int OPERAND_SHORTAGE			= 4;
+	static final int OPERAND_EXCEED				= 5;
+	static final int OPERAND_ERR				= 6;
+	static final int SYMBOL_WRONG_NAME			= 7;
+	static final int SYMBOL_UNDEFINED			= 8;
+	static final int SYMBOL_DUPLICATION			= 9;
+	static final int REGISTER_UNDEFINED			= 10;
+	static final int SYMBOL_NO_REFERENCE		= 11;
 	
-	private static String[] errMsg = {
+	private final static String[] errMsg = {
 			
 					"",
-					"1. Wrong Starting Charactor for BYTE directive",
-					"2. Not Matching about quotation mark",
-					"3. Undefined Operator",
-					"4. Operand is not integer",
-					"5. Symbol name duplication",
-					"6. There is No Operand",
-					"7. too much operands",
-					"8. symbol name parameter is null",
-					"9. token parsing error",
-					"11. null pointer exception",
-					"12. parameter wrong format"
+					"1. null pointer exception",
+					"2. Wrong foramt",
+					"3. undefined operator",
+					"4. insufficient operand",
+					"5. too much operand",
+					"6. operand error",
+					"7. wrong format symbol name",
+					"8. undefined symbol",
+					"9. symbol name duplication",
+					"10. undefined register",
+					"11. no reference"
 	};
 	
 }
