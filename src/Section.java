@@ -13,4 +13,8 @@ public class Section {
 		length = l;
 	}
 
+	public int getLength() {
+		return length;
+	}
+
 }

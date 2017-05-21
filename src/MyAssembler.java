@@ -1,9 +1,10 @@
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.regex.Pattern;
 
 public class MyAssembler {
 	
@@ -12,13 +13,6 @@ public class MyAssembler {
 		
 	private ArrayList<String> 	input_data;
 	private TokenTable			token_table;
-	
-	private InstructionTable 	INSTTAB;
-	private DirectiveTable 		DIRTAB;
-	private SymbolTable 		SYMTAB;
-	private LiteralTable 		LITTAB;
-	private SectionTable 		SECTAB;
-	private ModifyTable			MODTAB;
 
 	public MyAssembler(){
 
@@ -56,6 +50,28 @@ public class MyAssembler {
 	
 	public void make_object_file(){
 		
+		try {
+			
+			if(outputfile==null)
+				System.out.println(token_table.getObjectCode());
+			else{
+				
+				FileWriter fw = new FileWriter(outputfile);
+				BufferedWriter bw = new BufferedWriter(fw);
+				
+				bw.write(token_table.getObjectCode());
+				
+				bw.close();
+				fw.close();
+			}
+			
+		} catch (CustomException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		
 	}
 	
@@ -65,12 +81,6 @@ public class MyAssembler {
 		token_table = TokenTable.getInstance();
 		input_data = new ArrayList<String>();
 		
-		INSTTAB = InstructionTable.getInstance();
-		DIRTAB = DirectiveTable.getInstance();
-		SYMTAB = SymbolTable.getInstance();
-		LITTAB = LiteralTable.getInstance();
-		SECTAB = SectionTable.getInstance();
-		MODTAB = ModifyTable.getInstance();
 	}
 	
 	public void read_input_file(){
@@ -82,7 +92,6 @@ public class MyAssembler {
 			String line;
 			while((line=br.readLine())!=null){
 				input_data.add(line);
-//				System.out.println(line);
 			}
 			
 			br.close();

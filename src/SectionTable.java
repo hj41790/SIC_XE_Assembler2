@@ -73,4 +73,8 @@ public class SectionTable {
 		s.setLength(locctr - start_addr);
 	}
 	
+	public int getLength(int section){
+		return array.get(section).getLength();
+	}
+	
 }

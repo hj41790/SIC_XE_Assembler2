@@ -293,6 +293,7 @@ public class Token {
 						Symbol s = SYMTAB.search_localSymbol(operand[0], section);
 						if(operand[0].charAt(0)=='#' && s==null){
 							
+							// immediate
 							if(Pattern.matches("^#[0-9]+$", operand[0])){
 								String str = operand[0].substring(1);
 								address = Integer.parseInt(str);
@@ -303,6 +304,7 @@ public class Token {
 						}
 						else if(operand[0].charAt(0)=='='){
 							
+							// literal
 							Literal l = LITTAB.search(operand[0], section);
 							if(l==null)
 								throw new CustomException(CustomException.SYMBOL_UNDEFINED);
@@ -317,6 +319,7 @@ public class Token {
 						}
 						else if(s.isEXIST()){
 							
+							// pc-relative 
 							address = s.getAddr() - addr - 3;
 							
 							if(address<4096 && address>-4096) 
@@ -345,30 +348,36 @@ public class Token {
 		}
 		else if(optype==TYPE_LITERAL){
 			
+			// get real data from =C'__' ( =C'__' -> __ )
 			String substr = operator.substring(3, operator.length()-1);
 			
 			if(operator.charAt(1)=='C'){
+				// =C'__'
 				char[] arr = substr.toCharArray();
 				for(char c : arr){
 					result += String.format("%02X", (int)c);
 				}
 			}
 			else{
+				// =X'__'
 				result += String.format("%s", substr);
 			}
 			
 		}
 		else if(operator.equals("BYTE")){
 			
+			// get real data from C'__' ( C'__' -> __ )
 			String substr = operand[0].substring(2, operand[0].length()-1);
 
 			if(operand[0].charAt(1)=='C'){
+				// C'__'
 				char[] arr = substr.toCharArray();
 				for(char c : arr){
 					result += String.format("%02X", (int)c);
 				}
 			}
 			else{
+				// X'__'
 				result += String.format("%s", substr);
 			}
 			
@@ -415,6 +424,23 @@ public class Token {
 					count += str.length() + 1;
 					if(count<operand[0].length())
 						op = operand[0].charAt(count);
+				}
+				
+				result += String.format("%06X", code);
+				
+			}
+			else{
+				Symbol s = SYMTAB.search_localSymbol(operand[0], section);
+				if(s!=null && s.isEXIST()){
+					code += s.getAddr();
+				}
+				else if((s=SYMTAB.search_globalSymbol(operand[0]))!=null){
+
+					Modification m = new Modification(section, 6, 1, operand[0], this);
+					MODTAB.addModifyTable(m);
+				}
+				else{
+					throw new CustomException(CustomException.SYMBOL_UNDEFINED);
 				}
 				
 				result += String.format("%06X", code);
@@ -535,6 +561,13 @@ public class Token {
 		this.optype = optype;
 	}
 
+	public String getValue() {
+		return value;
+	}
+
+	public int getOptype() {
+		return optype;
+	}
 
 	private boolean isExpression(String s){
 		
