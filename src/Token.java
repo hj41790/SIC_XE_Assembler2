@@ -21,7 +21,7 @@ public class Token {
 	private SectionTable 		SECTAB;
 	private ModifyTable			MODTAB;
 	
-
+	
 	public Token(){
 		label = null;
 		operator = null;
@@ -348,6 +348,31 @@ public class Token {
 		}
 		else if(optype==TYPE_LITERAL){
 			
+			
+			String pattern1 = "^=C\'(\\s|\\S)*\'$";			// =C'__'
+			String pattern2 = "^=X\'([0-9]|[A-F]){2}\'$";	// =X'__'
+			String pattern3 = "^=[0-9]*$";
+			
+			if(Pattern.matches(pattern1, operator)){
+				String substr = operator.substring(3, operator.length()-1);
+				
+				char[] arr = substr.toCharArray();
+				for(char c : arr){
+					result += String.format("%02X", (int)c);
+				}
+			}
+			else if(Pattern.matches(pattern2, operator)){
+				String substr = operator.substring(3, operator.length()-1);
+				result += String.format("%s", substr);
+			}
+			else if(Pattern.matches(pattern3, operator)){
+				String substr = operator.substring(1);
+				result += String.format("%06X", Integer.parseInt(substr));
+			}
+			else
+				throw new CustomException(CustomException.WRONG_FORMAT);
+			
+/*			
 			// get real data from =C'__' ( =C'__' -> __ )
 			String substr = operator.substring(3, operator.length()-1);
 			
@@ -362,7 +387,7 @@ public class Token {
 				// =X'__'
 				result += String.format("%s", substr);
 			}
-			
+*/			
 		}
 		else if(operator.equals("BYTE")){
 			
@@ -587,6 +612,7 @@ public class Token {
 		return Pattern.matches(pattern, s);
 		
 	}
+
 
 
 

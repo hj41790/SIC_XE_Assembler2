@@ -57,6 +57,8 @@ public class TokenTable {
 		String text = "";
 		String result = "";
 		
+		Token end_token = null;
+		
 		
 		for(Token t : array){
 			
@@ -133,7 +135,7 @@ public class TokenTable {
 					}
 					
 				}
-				else if(operator.equals("CSECT") || operator.equals("END")){
+				else if(operator.equals("CSECT")){
 					
 					// check Text record
 					if(count>0){
@@ -147,64 +149,49 @@ public class TokenTable {
 					result += MODTAB.toString(section);
 					
 					// print end record
-					if(t.getSection()<=1)
+					if(t.getSection()<1)
 						result += String.format("E%06x\n\n", SECTAB.getReturn_addr());
 					else
 						result += "E\n\n";
+
+					section++;
 					
 					if(operator.equals("CSECT")){
 						start = t.getAddr();
 						result += String.format("H%-6s%06X%06X\n", 
 								t.getLabel(), start, SECTAB.getLength(section));
 					}
-					
-					section++;
-					
+				}
+				else if(operator.equals("END")){
+					end_token = t;
 				}
 				
 			}
-			
+
 		}
+
+		
+		// last End record
+		
+		// check Text record
+		if(count>0){
+			result += String.format("T%06X%02X%s\n", start, count, text);
+			start = end_token.getAddr();
+			count = 0;
+			text = "";
+		}
+		
+		// print modification record
+		result += MODTAB.toString(section);
+		
+		// print end record
+		if(end_token.getSection()<1)
+			result += String.format("E%06x\n\n", SECTAB.getReturn_addr());
+		else
+			result += "E\n\n";
+		
 		
 		return result;
 	}
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 

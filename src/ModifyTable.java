@@ -51,7 +51,7 @@ public class ModifyTable {
 		for(Modification m : array){
 			
 			if(m.checkSection(section)){
-				result += m.toString() + "\n";
+				result += "M" + m.toString() + "\n";
 			}
 			
 		}
@@ -60,3 +60,4 @@ public class ModifyTable {
 	}
 	
 }
+

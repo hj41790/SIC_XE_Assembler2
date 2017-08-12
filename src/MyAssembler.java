@@ -81,6 +81,13 @@ public class MyAssembler {
 		token_table = TokenTable.getInstance();
 		input_data = new ArrayList<String>();
 		
+		SymbolTable.getInstance();
+		InstructionTable.getInstance();
+		DirectiveTable.getInstance();
+		LiteralTable.getInstance();
+		ModifyTable.getInstance();
+		SectionTable.getInstance();
+		
 	}
 	
 	public void read_input_file(){
@@ -116,40 +123,4 @@ public class MyAssembler {
 	}
 
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 

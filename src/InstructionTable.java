@@ -9,7 +9,6 @@ public class InstructionTable {
 	
 	private HashMap<String, Instruction> map = null;
 	private String filename = "inst.data";
-	
 	private String[] reg_table;
 	
 	public static InstructionTable getInstance(){

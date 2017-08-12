@@ -34,16 +34,19 @@ public class LiteralTable {
 			int length = 0;
 			String pattern1 = "^=C\'(\\s|\\S)*\'$";			// =C'__'
 			String pattern2 = "^=X\'([0-9]|[A-F]){2}\'$";	// =X'__'
+			String pattern3 = "^=[0-9]*$";
 			
 			if(Pattern.matches(pattern1, name)){
 				length = name.length()-4;
 			}
 			else if(Pattern.matches(pattern2, name)){
-				length = (int) Math.ceil((name.length()-3)/2.0);
+				length = (name.length()-3)/2;
+			}
+			else if(Pattern.matches(pattern3, name)){
+				length = 3;
 			}
 			else
 				throw new CustomException(CustomException.WRONG_FORMAT);
-			
 			
 			Literal l = new Literal(name, section, length);
 			array.add(l);

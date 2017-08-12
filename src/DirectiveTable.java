@@ -412,15 +412,12 @@ public class DirectiveTable {
 		
 	}
 	
-	
-
 	public int getIndex(String name){
 		for(int i=0; i<dir_table.length; i++)
 			if(dir_table[i].equals(name)) return i;
 		
 		return -1;
 	}
-	
 	
 	public int getOperandNum(String name){
 		

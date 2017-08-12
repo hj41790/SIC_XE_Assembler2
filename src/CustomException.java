@@ -8,11 +8,6 @@ public class CustomException extends Exception {
 		errCode = a;
 	}
 	
-	public int getErrorCode(){
-		return errCode;
-	}
-	
-	
 	static final int NULL_POINTER_EXCEPTION		= 1;
 	static final int WRONG_FORMAT				= 2;
 	static final int OPERATOR_UNDEFINED			= 3;
@@ -42,3 +37,4 @@ public class CustomException extends Exception {
 	};
 	
 }
+

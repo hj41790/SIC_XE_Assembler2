@@ -71,6 +71,8 @@ public class SectionTable {
 	public void setLength(){
 		Section s = array.get(sectionNum);
 		s.setLength(locctr - start_addr);
+		
+//		System.out.println("\n\n"+String.format("%X", locctr-start_addr));
 	}
 	
 	public int getLength(int section){

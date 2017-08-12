@@ -18,8 +18,7 @@ public class SymbolTable {
 		
 		return table;
 	}
-	
-	
+		
 	private SymbolTable(){
 		array = new ArrayList<Symbol>();
 	}
@@ -89,10 +88,11 @@ public class SymbolTable {
 			s.print();
 		}
 	}
-	
-	
+		
 	private boolean isValidSymbol(String n){
 		String pattern = "^[A-Z]{1}([0-9]|[A-Z])+$";
 		return Pattern.matches(pattern, n);
 	}
 }
+
+
